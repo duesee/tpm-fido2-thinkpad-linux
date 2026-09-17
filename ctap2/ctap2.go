@@ -3,7 +3,6 @@ package ctap2
 import (
 	"context"
 	"crypto/ecdsa"
-	"crypto/sha256"
 	"errors"
 	"log"
 	"math/big"
@@ -80,7 +79,10 @@ type assertionState struct {
 // NewHandler creates a new CTAP2 command handler
 func NewHandler(signer Signer, presence *userpresence.UserPresence, storage *CredentialStorage) *Handler {
 	// Generate AAGUID from SHA256("tpm-fido-prf")[:16]
-	hash := sha256.Sum256([]byte("tpm-fido-prf"))
+	// hash := sha256.Sum256([]byte("tpm-fido-prf"))
+	// Test
+	// hash := []byte("\x06\x19\x2c\xbb\x55\x49\x9b\x02\xbf\x6c\xa0\xdc\x57\x78\x89\xdd")
+	hash := []byte("\x0a\x35\x71\x57\x9b\x18\x4c\x8a\x92\x0e\xd1\x56\xe9\x72\xb2\xf8")
 	var aaguid [16]byte
 	copy(aaguid[:], hash[:16])
 
